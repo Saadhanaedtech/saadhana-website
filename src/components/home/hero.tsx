@@ -1,5 +1,5 @@
 import GradientText from "../common/GradientText";
-import HeroBackground from "./HeroBackground";
+import HeroBackground from "./hero-background";
 
 export default function Hero() {
   return (
