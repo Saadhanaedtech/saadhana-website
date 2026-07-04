@@ -1,5 +1,4 @@
 import Container from "@/components/common/Container";
-import NavCTA from "./NavCTA";
 import NavLogo from "./NavLogo";
 import NavMenu from "./NavMenu";
 
@@ -15,10 +14,6 @@ export default function Navbar() {
 
           <div className="flex flex-1 justify-center">
             <NavMenu />
-          </div>
-
-          <div className="flex-shrink-0">
-            <NavCTA />
           </div>
 
         </div>

@@ -27,9 +27,4 @@ export const SITE = {
       href: "/contact",
     },
   ],
-
-  cta: {
-    label: "Get Started",
-    href: "/contact",
-  },
 };
