@@ -11,6 +11,7 @@ interface FormData {
   email: string;
   company: string;
   message: string;
+  website: string; // Honeypot
 }
 
 export default function ContactForm() {
@@ -19,6 +20,7 @@ export default function ContactForm() {
     email: "",
     company: "",
     message: "",
+    website: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,37 +34,40 @@ export default function ContactForm() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
 
     setIsSubmitting(true);
 
     try {
-      /**
-       * Phase 2
-       *
-       * await fetch("/api/contact", {
-       *   method: "POST",
-       *   headers: {
-       *      "Content-Type":"application/json"
-       *   },
-       *   body: JSON.stringify(formData)
-       * });
-       */
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      if (!response.ok) {
+        throw new Error("Unable to send message.");
+      }
 
-      alert("Message sent successfully.");
+      alert("Thank you! Your message has been sent successfully.");
 
       setFormData({
         fullName: "",
         email: "",
         company: "",
         message: "",
+        website: "",
       });
     } catch (error) {
       console.error(error);
-      alert("Unable to send message.");
+      alert(
+        "Sorry, something went wrong. Please try again later."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -80,6 +85,17 @@ export default function ContactForm() {
         onSubmit={handleSubmit}
         className="space-y-6"
       >
+        {/* Honeypot */}
+        <input
+          type="text"
+          name="website"
+          value={formData.website}
+          onChange={handleChange}
+          autoComplete="off"
+          tabIndex={-1}
+          className="hidden"
+        />
+
         <div className="grid gap-6 md:grid-cols-2">
           <div>
             <label className="mb-2 block text-sm font-semibold">
@@ -146,12 +162,8 @@ export default function ContactForm() {
         </div>
 
         <motion.button
-          whileHover={{
-            scale: 1.01,
-          }}
-          whileTap={{
-            scale: 0.98,
-          }}
+          whileHover={{ scale: 1.01 }}
+          whileTap={{ scale: 0.98 }}
           disabled={isSubmitting}
           type="submit"
           className="flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-primary text-base font-semibold text-primary-foreground transition hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"

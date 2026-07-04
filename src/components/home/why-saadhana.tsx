@@ -9,7 +9,9 @@ const icons = {
   experts: Users,
   global: Globe2,
   learning: GraduationCap,
-};
+              } as const;
+
+type IconKey = keyof typeof icons;
 
 export default function WhySaadhana() {
   return (
@@ -41,7 +43,7 @@ export default function WhySaadhana() {
 
           <div className="mt-12 space-y-5">
             {whySaadhana.map((item) => {
-              const Icon = icons[item.icon];
+              const Icon = icons[item.icon as IconKey];
 
               return (
                 <motion.div

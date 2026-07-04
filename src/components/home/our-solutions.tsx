@@ -14,7 +14,9 @@ const icons = {
   institutions: GraduationCap,
   enterprises: Building2,
   recruitment: BriefcaseBusiness,
-};
+} as const;
+
+type IconKey = keyof typeof icons;
 
 export default function OurSolutions() {
   return (
@@ -43,7 +45,7 @@ export default function OurSolutions() {
 
         <div className="mt-20 grid gap-8 lg:grid-cols-3">
           {solutions.map((item, index) => {
-            const Icon = icons[item.icon];
+           const Icon = icons[item.icon as IconKey];
 
             return (
               <motion.div

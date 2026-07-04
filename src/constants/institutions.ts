@@ -7,7 +7,7 @@ import {
   Users,
 } from "lucide-react";
 
-import { Program } from "@/types/institution";
+import { Program } from "@/types/institutions";
 
 export const programsBadge = "OUR PROGRAMS";
 
