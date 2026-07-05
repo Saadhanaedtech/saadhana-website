@@ -104,7 +104,7 @@ export default function Footer() {
 
               <li>
                 <a
-                  href="mailto:info@saadhana.com"
+                  href="mailto:ram@saadhanaedtech.com"
                   className="text-slate-600 transition hover:text-violet-700"
                 >
                   Email Us
