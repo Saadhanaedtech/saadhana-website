@@ -1,9 +1,18 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: Request) {
+
+  if (!process.env.RESEND_API_KEY) {
+    return NextResponse.json(
+      { error: "Server configuration error." },
+      { status: 500 }
+    );
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
+
+
   try {
     const body = await request.json();
 
@@ -31,20 +40,60 @@ export async function POST(request: Request) {
     }
 
     await resend.emails.send({
-      from: "Saadhana Website <onboarding@resend.dev>",
+      from: "Saadhana EdTech <noreply@saadhanaedtech.com>",
       to: process.env.CONTACT_EMAIL!,
       replyTo: email,
-      subject: `New enquiry from ${fullName}`,
+      subject: `New Website enquiry from ${fullName}`,
       html: `
-        <h2>New Contact Form Submission</h2>
+      <div style="font-family:Arial,Helvetica,sans-serif;background:#f8fafc;padding:40px;">
+        <div style="max-width:700px;margin:auto;background:#ffffff;border-radius:12px;padding:40px;border:1px solid #e5e7eb;">
 
-        <p><strong>Name:</strong> ${fullName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Institution / Company:</strong> ${company || "-"}</p>
+          <h2 style="margin-top:0;color:#0f172a;">
+            New Website Enquiry
+          </h2>
 
-        <hr />
+          <p style="color:#64748b;">
+            A visitor has submitted the contact form from the
+            <strong>Saadhana EdTech</strong> website.
+          </p>
 
-        <p>${message.replace(/\n/g, "<br/>")}</p>
+          <hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb;">
+
+          <table style="width:100%;border-collapse:collapse;">
+            <tr>
+              <td style="padding:10px 0;font-weight:bold;width:180px;">Name</td>
+              <td>${fullName}</td>
+            </tr>
+
+            <tr>
+              <td style="padding:10px 0;font-weight:bold;">Email</td>
+              <td>
+                <a href="mailto:${email}">
+                  ${email}
+                </a>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:10px 0;font-weight:bold;">Institution / Company</td>
+              <td>${company || "-"}</td>
+            </tr>
+
+            <tr>
+              <td style="padding:10px 0;font-weight:bold;vertical-align:top;">Message</td>
+              <td>${message.replace(/\n/g, "<br/>")}</td>
+            </tr>
+          </table>
+
+          <hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb;">
+
+          <p style="font-size:12px;color:#94a3b8;">
+            This email was automatically generated from the
+            Saadhana EdTech website contact form.
+          </p>
+
+        </div>
+      </div>
       `,
     });
 
