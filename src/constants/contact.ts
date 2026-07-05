@@ -28,13 +28,13 @@ export const contactInfo = {
     {
       icon: Mail,
       title: "Email",
-      value: "info@saadhanaedtech.com",
+      value: "ram@saadhanaedtech.com",
     },
 
     {
       icon: Phone,
       title: "Phone",
-      value: "+91 • Available on request",
+      value: "+91 • 98850 46666",
     },
 
     {
